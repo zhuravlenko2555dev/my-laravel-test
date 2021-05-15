@@ -25,4 +25,13 @@ class Character extends Model
         'nickname',
         'portrayed',
     ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'occupations' => 'json',
+    ];
 }
