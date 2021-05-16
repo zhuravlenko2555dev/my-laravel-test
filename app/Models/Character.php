@@ -34,4 +34,14 @@ class Character extends Model
     protected $casts = [
         'occupations' => 'json',
     ];
+
+    public function episodes()
+    {
+        return $this->belongsToMany(Episode::class);
+    }
+
+    public function quotes()
+    {
+        return $this->hasMany(Quote::class);
+    }
 }

@@ -21,4 +21,9 @@ class Episode extends Model
         'title',
         'air_date',
     ];
+
+    public function characters()
+    {
+        return $this->belongsToMany(Character::class);
+    }
 }
