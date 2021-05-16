@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Flugg\Responder\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 
 class Handler extends ExceptionHandler
 {
@@ -33,5 +34,14 @@ class Handler extends ExceptionHandler
     public function register()
     {
         //
+    }
+
+    public function render($request, $exception)
+    {
+        $this->convert($exception, [
+            ThrottleRequestsException::class => TooManyAttemptsException::class,
+        ]);
+
+        return parent::render($request, $exception);
     }
 }

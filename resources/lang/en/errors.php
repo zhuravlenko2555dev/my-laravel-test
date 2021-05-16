@@ -18,5 +18,5 @@ return [
     'page_not_found' => 'The requested page does not exist.',
     'relation_not_found' => 'The requested relation does not exist.',
     'validation_failed' => 'The given data failed to pass validation.',
-
+    'too_many_attempts' => 'You make too many requests.'
 ];
