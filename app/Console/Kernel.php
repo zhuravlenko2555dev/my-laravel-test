@@ -2,8 +2,11 @@
 
 namespace App\Console;
 
+use App\Jobs\SummateApiRequestHitByAllUsers;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 
 class Kernel extends ConsoleKernel
 {
@@ -25,6 +28,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->job(new SummateApiRequestHitByAllUsers())->everyMinute();
     }
 
     /**

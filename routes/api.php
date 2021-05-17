@@ -3,6 +3,7 @@
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\EpisodeController;
 use App\Http\Controllers\QuoteController;
+use App\Http\Controllers\StatsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,10 +18,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => 'throttle:20'], function () {
-    Route::resource('episodes', EpisodeController::class)->middleware('auth:sanctum')->only(['index', 'show']);
-    Route::get('characters/random', [CharacterController::class, 'random'])->middleware('auth:sanctum');
-    Route::resource('characters', CharacterController::class)->middleware('auth:sanctum')->only(['index']);
-    Route::get('quotes/random', [QuoteController::class, 'random_by_author'])->middleware('auth:sanctum');
-    Route::resource('quotes', QuoteController::class)->middleware('auth:sanctum')->only(['index'])->only(['index']);
+Route::group(['middleware' => ['auth:sanctum', 'throttle:20', 'increment.user']], function () {
+    Route::resource('episodes', EpisodeController::class)->only(['index', 'show']);
+    Route::get('characters/random', [CharacterController::class, 'random']);
+    Route::resource('characters', CharacterController::class)->only(['index']);
+    Route::get('quotes/random', [QuoteController::class, 'random_by_author']);
+    Route::resource('quotes', QuoteController::class)->only(['index']);
 });
+
+Route::get('stats', [StatsController::class, 'stats']);
+Route::get('my-stats', [StatsController::class, 'my_stats'])->middleware('auth:sanctum');
